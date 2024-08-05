@@ -7,7 +7,8 @@ const Board = ({ columns, addNewCard }) => {
       {Object.entries(columns).map(([columnId, column]) => (
         <Droppable key={columnId} droppableId={columnId}>
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div {...provided.droppableProps} ref={provided.innerRef} className="bg-gray-200 p-4 rounded-lg shadow-md w-72">
+              <h2 className="text-lg font-semibold mb-4">{column.title}</h2>
               <Column column={column} addNewCard={() => addNewCard(columnId)} />
               {provided.placeholder}
             </div>

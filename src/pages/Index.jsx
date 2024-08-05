@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Board from '../components/Board';
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const Index = () => {
   const [columns, setColumns] = useState({
@@ -56,10 +57,10 @@ const Index = () => {
         cards: newCards,
       };
 
-      setColumns({
-        ...columns,
+      setColumns((prevColumns) => ({
+        ...prevColumns,
         [newColumn.id]: newColumn,
-      });
+      }));
     } else {
       const startCards = Array.from(start.cards);
       const [movedItem] = startCards.splice(source.index, 1);
@@ -75,12 +76,14 @@ const Index = () => {
         cards: finishCards,
       };
 
-      setColumns({
-        ...columns,
+      setColumns((prevColumns) => ({
+        ...prevColumns,
         [newStart.id]: newStart,
         [newFinish.id]: newFinish,
-      });
+      }));
     }
+
+    toast.success("Card moved successfully!");
   };
 
   const addNewCard = (columnId) => {
