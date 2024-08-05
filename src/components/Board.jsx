@@ -1,10 +1,10 @@
 import Column from './Column';
 
-const Board = ({ columns }) => {
+const Board = ({ columns, addNewCard }) => {
   return (
     <div className="flex space-x-4 overflow-x-auto pb-4">
-      {Object.values(columns).map((column) => (
-        <Column key={column.id} column={column} />
+      {Object.entries(columns).map(([columnId, column]) => (
+        <Column key={columnId} column={column} addNewCard={() => addNewCard(columnId)} />
       ))}
     </div>
   );

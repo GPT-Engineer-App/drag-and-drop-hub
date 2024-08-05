@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Board from '../components/Board';
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [columns, setColumns] = useState({
@@ -82,11 +83,23 @@ const Index = () => {
     }
   };
 
+  const addNewCard = (columnId) => {
+    const newCardId = `task-${Date.now()}`;
+    const newCard = { id: newCardId, content: 'New Task' };
+    setColumns(prevColumns => ({
+      ...prevColumns,
+      [columnId]: {
+        ...prevColumns[columnId],
+        cards: [...prevColumns[columnId].cards, newCard]
+      }
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-4xl font-bold mb-8 text-center">Trello Clone</h1>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Board columns={columns} />
+        <Board columns={columns} addNewCard={addNewCard} />
       </DragDropContext>
     </div>
   );
