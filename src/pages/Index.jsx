@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [columns, setColumns] = useState({
-    'todo': {
+    todo: {
       id: 'todo',
       title: 'To Do',
       cards: [
@@ -20,7 +20,7 @@ const Index = () => {
         { id: 'task-3', content: 'Review code' },
       ]
     },
-    'done': {
+    done: {
       id: 'done',
       title: 'Done',
       cards: [
