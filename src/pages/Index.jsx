@@ -7,7 +7,6 @@ import { toast } from "sonner";
 const Index = () => {
   const [columns, setColumns] = useState({
     todo: {
-      id: 'todo',
       title: 'To Do',
       cards: [
         { id: 'task-1', content: 'Learn React' },
@@ -15,14 +14,12 @@ const Index = () => {
       ]
     },
     inProgress: {
-      id: 'inProgress',
       title: 'In Progress',
       cards: [
         { id: 'task-3', content: 'Review code' },
       ]
     },
     done: {
-      id: 'done',
       title: 'Done',
       cards: [
         { id: 'task-4', content: 'Setup project' },
