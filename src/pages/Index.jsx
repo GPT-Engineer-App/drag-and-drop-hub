@@ -13,8 +13,8 @@ const Index = () => {
         { id: 'task-2', content: 'Build a Trello clone' },
       ]
     },
-    'in-progress': {
-      id: 'in-progress',
+    inProgress: {
+      id: 'inProgress',
       title: 'In Progress',
       cards: [
         { id: 'task-3', content: 'Review code' },
