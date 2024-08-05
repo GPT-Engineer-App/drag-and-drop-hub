@@ -1,5 +1,6 @@
 import Card from './Card';
 import { Button } from "@/components/ui/button";
+
 const Column = ({ column, addNewCard }) => {
   return (
     <div>

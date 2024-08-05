@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import Column from '../components/Column';
+import { DragDropContext } from 'react-beautiful-dnd';
+import Board from '../components/Board';
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const Index = () => {
   const [columns, setColumns] = useState({
     todo: {
+      id: 'todo',
       title: 'To Do',
       cards: [
         { id: 'task-1', content: 'Learn React' },
@@ -14,12 +15,14 @@ const Index = () => {
       ]
     },
     inProgress: {
+      id: 'inProgress',
       title: 'In Progress',
       cards: [
         { id: 'task-3', content: 'Review code' },
       ]
     },
     done: {
+      id: 'done',
       title: 'Done',
       cards: [
         { id: 'task-4', content: 'Setup project' },
@@ -99,27 +102,7 @@ const Index = () => {
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-4xl font-bold mb-8 text-center">Trello Clone</h1>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex space-x-4 overflow-x-auto pb-4">
-          {Object.entries(columns).map(([columnId, column]) => (
-            <Droppable key={columnId} droppableId={columnId}>
-              {(provided) => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  className="bg-gray-200 p-4 rounded-lg shadow-md w-72"
-                >
-                  <h2 className="text-lg font-semibold mb-4">{column.title}</h2>
-                  <Column
-                    columnId={columnId}
-                    column={column}
-                    addNewCard={() => addNewCard(columnId)}
-                  />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </div>
+        <Board columns={columns} addNewCard={addNewCard} />
       </DragDropContext>
     </div>
   );
