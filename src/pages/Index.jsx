@@ -1,12 +1,93 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
+import Board from '../components/Board';
 
 const Index = () => {
+  const [columns, setColumns] = useState({
+    'todo': {
+      id: 'todo',
+      title: 'To Do',
+      cards: [
+        { id: 'task-1', content: 'Learn React' },
+        { id: 'task-2', content: 'Build a Trello clone' },
+      ]
+    },
+    'in-progress': {
+      id: 'in-progress',
+      title: 'In Progress',
+      cards: [
+        { id: 'task-3', content: 'Review code' },
+      ]
+    },
+    'done': {
+      id: 'done',
+      title: 'Done',
+      cards: [
+        { id: 'task-4', content: 'Setup project' },
+      ]
+    }
+  });
+
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = columns[source.droppableId];
+    const finish = columns[destination.droppableId];
+
+    if (start === finish) {
+      const newCards = Array.from(start.cards);
+      const [reorderedItem] = newCards.splice(source.index, 1);
+      newCards.splice(destination.index, 0, reorderedItem);
+
+      const newColumn = {
+        ...start,
+        cards: newCards,
+      };
+
+      setColumns({
+        ...columns,
+        [newColumn.id]: newColumn,
+      });
+    } else {
+      const startCards = Array.from(start.cards);
+      const [movedItem] = startCards.splice(source.index, 1);
+      const newStart = {
+        ...start,
+        cards: startCards,
+      };
+
+      const finishCards = Array.from(finish.cards);
+      finishCards.splice(destination.index, 0, movedItem);
+      const newFinish = {
+        ...finish,
+        cards: finishCards,
+      };
+
+      setColumns({
+        ...columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      });
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <h1 className="text-4xl font-bold mb-8 text-center">Trello Clone</h1>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Board columns={columns} />
+      </DragDropContext>
     </div>
   );
 };
