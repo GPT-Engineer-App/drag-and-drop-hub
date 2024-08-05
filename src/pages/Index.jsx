@@ -41,42 +41,42 @@ const Index = () => {
       return;
     }
 
-    const start = columns[source.droppableId];
-    const finish = columns[destination.droppableId];
+    const startColumn = columns[source.droppableId];
+    const finishColumn = columns[destination.droppableId];
 
-    if (start === finish) {
-      const newCards = Array.from(start.cards);
+    if (startColumn === finishColumn) {
+      const newCards = Array.from(startColumn.cards);
       const [reorderedItem] = newCards.splice(source.index, 1);
       newCards.splice(destination.index, 0, reorderedItem);
 
       const newColumn = {
-        ...start,
+        ...startColumn,
         cards: newCards,
       };
 
       setColumns((prevColumns) => ({
         ...prevColumns,
-        [newColumn.id]: newColumn,
+        [source.droppableId]: newColumn,
       }));
     } else {
-      const startCards = Array.from(start.cards);
+      const startCards = Array.from(startColumn.cards);
       const [movedItem] = startCards.splice(source.index, 1);
       const newStart = {
-        ...start,
+        ...startColumn,
         cards: startCards,
       };
 
-      const finishCards = Array.from(finish.cards);
+      const finishCards = Array.from(finishColumn.cards);
       finishCards.splice(destination.index, 0, movedItem);
       const newFinish = {
-        ...finish,
+        ...finishColumn,
         cards: finishCards,
       };
 
       setColumns((prevColumns) => ({
         ...prevColumns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish,
+        [source.droppableId]: newStart,
+        [destination.droppableId]: newFinish,
       }));
     }
 
